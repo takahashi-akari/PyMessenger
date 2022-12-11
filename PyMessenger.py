@@ -84,6 +84,11 @@ if __name__ == '__main__':
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Exit': # if user closes window or clicks cancel
             window.close()
+            try:
+                sio_client.disconnect()
+            except:
+                pass
+            
             instance.stop()
             break
 
