@@ -70,9 +70,10 @@ def createWindow(ip):
     return sg.Window('PyMessenger', layout)
 
 if __name__ == '__main__':
-    config = Config(app, host='0.0.0.0', port=PORT, log_level="error", ssl_keyfile="server.key", ssl_certfile="server.crt")
+    config = Config(app, host='0.0.0.0', port=PORT, log_level="info", ssl_keyfile="server.key", ssl_certfile="server.crt", loop="asyncio")
     instance = UvicornServer(config)
-    instance.start()
+    thread = threading.Thread(target=instance.run)
+    thread.start()
 
     host = socket.gethostname()
     ip = "Waiting for connection..." + "\n"
@@ -88,8 +89,8 @@ if __name__ == '__main__':
                 sio_client.disconnect()
             except:
                 pass
-            
             instance.stop()
+            thread.join()
             break
 
         if event == 'Send':
