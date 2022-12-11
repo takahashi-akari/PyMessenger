@@ -89,7 +89,10 @@ if __name__ == '__main__':
 
         if event == 'Send':
             # connect to the server
-            sio_client.connect('https://' + values['-IP-'] + ':' + values['-PORT-'])
+            try:
+                sio_client.connect('https://' + values['-IP-'] + ':' + values['-PORT-'])
+            except:
+                pass
             sio_client.emit('message', values['-IN-'])
             # print(values[0])
             #sio.emit('message', values[0])
