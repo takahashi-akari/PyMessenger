@@ -22,6 +22,7 @@ class UvicornServer(threading.Thread):
 
     def stop(self):
         self.server.should_exit = True
+        self.server.force_exit = True
 
     def run(self, *args, **kwargs):
         self.server.run()
